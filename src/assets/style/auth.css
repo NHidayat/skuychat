@@ -8,6 +8,15 @@
 	text-decoration: none;
 }
 
+.icon-section {
+	border-radius: 5px;
+	transition: .5s all
+}
+
+.icon-section:hover {
+	background: #efefef;
+}
+
 .auth-wrapper {
     background: #fff;
     box-shadow: 0px 20px 20px rgba(126, 152, 223, 0.05);
