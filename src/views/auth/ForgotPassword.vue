@@ -5,7 +5,7 @@
         <div class="auth-header row">
           <b-col cols="2" class="icon-section">
             <router-link to="/login">
-              <b-icon-chevron-left class="text-left"></b-icon-chevron-left>
+              <font-awesome-icon icon="chevron-left" class="text-link primary" />
             </router-link>
           </b-col>
           <b-col cols="8">

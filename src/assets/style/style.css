@@ -1,0 +1,140 @@
+.primary {
+    color: #7E98DF;
+}
+
+.text-link {
+    text-decoration: none;
+    cursor: pointer
+}
+
+.icon-section {
+    border-radius: 5px;
+    transition: .5s all
+}
+
+.icon-section:hover {
+    background: #efefef;
+}
+
+.sidebar {
+    background: #fff;
+    padding: 30px 20px;
+    position: fixed;
+    overflow: scroll;
+    max-height: -webkit-fill-available;
+    min-height: 100%;
+}
+
+.sidebar-header {
+    font-weight: 500;
+    font-size: 25px;
+    color: #7E98DF;
+    margin-bottom: 25px;
+}
+
+.sidebar-search {
+    font-weight: 500;
+    font-size: 25px;
+    color: #7E98DF;
+    margin-bottom: 25px;
+}
+
+.sidebar-search input {
+    font-size: 14px;
+    background: #FAFAFA;
+    width: 100%;
+    padding: 18px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+}
+
+.sidebar .message-status {
+    font-weight: 500;
+}
+
+.status-collection {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.status-items {
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 20px;
+}
+
+.status-items:hover {
+    cursor: pointer;
+    background: #FAFAFA
+}
+
+.status-items.active {
+    background: #7E98DF;
+    color: #fff;
+}
+
+.card-chat-items {
+    cursor: pointer;
+    padding: 10px 5px;
+    transition: .2s all;
+    min-width: 320px;
+    display: flex;
+    border-radius: 10px;
+}
+
+.card-chat-items:hover {
+    background: #efefef
+}
+
+.card-chat-image {
+    margin-right: 10px;
+}
+
+.card-chat-image img {
+    width: 64px;
+    border-radius: 20px;
+}
+
+.card-chat-items .card-chat-top {
+	margin-top: 10px 
+}
+
+.card-chat-items .card-chat-name {
+    font-weight: 500;
+    white-space: nowrap;
+    width: 210px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-chat-items .card-chat-time {
+    color: #848484;
+    float: right;
+}
+
+.card-chat-items .card-chat-top {
+    margin-bottom: 5px;
+}
+
+.card-chat-items .card-chat-bottom {
+    display: flex;
+}
+
+.card-chat-bottom .card-chat-text {
+    color: #7E98DF;
+    font-size: 14px;
+    white-space: nowrap;
+    width: 210px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-chat-count {
+    background: #7E98DF;
+    border-radius: 50px;
+    color: #fff;
+    padding: 4px 9px;
+    min-width: 50px;
+}

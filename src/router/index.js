@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/auth/Login.vue'
 import Register from '../views/auth/Register.vue'
 import ForgotPassword from '../views/auth/ForgotPassword.vue'
+import App from '../views/App.vue'
 
 Vue.use(VueRouter)
 
@@ -29,12 +30,9 @@ const routes = [
     component: ForgotPassword
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/app',
+    name: 'App',
+    component: App
   }
 ]
 
