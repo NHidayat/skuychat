@@ -1,5 +1,6 @@
 .primary {
     color: #7E98DF;
+    outline: none;
 }
 
 .text-link {
@@ -30,6 +31,33 @@
     font-size: 25px;
     color: #7E98DF;
     margin-bottom: 25px;
+}
+
+.sidebar-header .dropdown-menu {
+    background: #7E98DF;
+    border-radius: 35px 10px 35px 35px;
+    border: 0;
+}
+
+.sidebar-header .dropdown-toggle {
+    padding: 0;
+    font-size: 25px;
+    outline: none;
+    color: #7E98DF
+}
+
+.sidebar-header .dropdown-menu li a {
+    color: #fff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.sidebar-header .dropdown-menu li a:hover {
+    color: #7E98DF;
+}
+
+.dropdown-menu .list-icon {
+    margin-right: 15px;
 }
 
 .sidebar-search {

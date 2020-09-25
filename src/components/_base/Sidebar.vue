@@ -6,7 +6,36 @@
           <span>Skuychat</span>
         </b-col>
         <b-col cols="3" align="right">
-          <font-awesome-icon icon="bars" class="text-link" />
+          <b-dropdown size="lg" variant="link" right toggle-class="text-decoration-none" no-caret>
+            <template v-slot:button-content>
+              <font-awesome-icon icon="bars" class="text-link bar-icon" />
+            </template>
+            <b-dropdown-item href="#">
+              <font-awesome-icon :icon="['far', 'user']" class="list-icon" />
+              <span>Contacts</span>
+            </b-dropdown-item>
+            <b-dropdown-item href="#">
+              <font-awesome-icon :icon="['far', 'bookmark']" class="list-icon" />
+              <span>Save Messages</span>
+            </b-dropdown-item>
+            <b-dropdown-item href="#" v-b-modal.add-product-modal>
+              <font-awesome-icon icon="user-plus" class="list-icon" />
+              <span>Invite Fiends</span>
+            </b-dropdown-item>
+            <b-modal id="add-product-modal"
+            ref="add-product-modal"
+            header-bg-variant="info"
+            header-text-variant="light" centered
+            hide-footer title="Add Friend">
+              <p class="my-4">Insert your friend email</p>
+              <b-form inline>
+                <b-input placeholder="Email"></b-input>
+                <b-button variant="info" class="ml-2">
+                  <font-awesome-icon icon="user-plus" class="list-icon" />
+                </b-button>
+              </b-form>
+            </b-modal>
+          </b-dropdown>
         </b-col>
       </b-row>
     </div>
