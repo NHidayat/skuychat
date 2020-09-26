@@ -1,3 +1,7 @@
+body {
+    /*background: #FAFAFA !important*/
+}
+
 .primary {
     color: #7E98DF;
     outline: none;
@@ -126,7 +130,7 @@
 }
 
 .card-chat-items .card-chat-top {
-	margin-top: 10px 
+    margin-top: 10px
 }
 
 .card-chat-items .card-chat-name {
@@ -165,4 +169,78 @@
     color: #fff;
     padding: 4px 9px;
     min-width: 50px;
+}
+
+/*---------Room Chat--------*/
+
+.empty-room {
+    color: #848484;
+    text-align: center;
+    padding-top: 200px;
+}
+
+.room-chat {
+    position: relative;
+    height: 100%;
+}
+
+.room-chat .room-navbar {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    padding: 15px;
+}
+
+.room-img-profile img {
+    width: 64px;
+    border-radius: 20px;
+}
+
+.room-desc {
+    display: flex;
+}
+
+.room-chat .room-name {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.chat-body {
+    padding: 15px;
+}
+
+.room-body .chat-collection {
+    margin-top: 20px;
+}
+
+.chat-collection .chat-item {
+    display: flex;
+}
+
+.chat-item .chat-img-profile img {
+    width: 54px;
+    border-radius: 20px;
+}
+
+.chat-text {
+    padding: 20px;
+    color: #fff;
+    max-width: 300px;
+    background: #7E98DF;
+    border-radius: 35px 35px 35px 10px;
+}
+
+.room-chat .room-footer {
+    background: #fff;
+    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.room-footer input {
+    background: #FAFAFA;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
 }
