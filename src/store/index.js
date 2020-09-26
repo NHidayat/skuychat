@@ -2,12 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import Auth from './modules/auth'
+import Friend from './modules/friend'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    Auth
+    Auth,
+    Friend
   },
   state: {},
   mutations: {},
