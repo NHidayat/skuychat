@@ -8,7 +8,8 @@
         <b-row class="container">
           <b-col class="room-desc">
             <div class="room-img-profile">
-              <img :src="SRC_URL + roomChat.room_img" alt="">
+              <img :src="SRC_URL + roomChat.room_img" alt="" v-if="roomChat.room_img !== null">
+              <img src="../../assets/default-user.png" alt="" v-else>
             </div>
             <div class="room-name">
               <span>{{ roomChat.room_name }}</span><br>
@@ -25,7 +26,8 @@
           <div class="chat-collection" align="right">
             <div class="chat-item" v-for="(v, i) in roomChat.messages" :key="i">
               <div class="chat-img-profile">
-                <img :src="SRC_URL + v.sender_img" alt="">
+                <img :src="SRC_URL + v.sender_img" alt="" v-if="v.sender_img">
+                <img src="../../assets/default-user.png" alt="" v-else>
               </div>
               <div v-if="user.user_id == v.user_id">
                 <div class="chat-text" style="background: #fff; color: #000">
@@ -43,7 +45,7 @@
       </div>
       <div class="room-footer">
         <form @submit.prevent="onSubmit">
-          <input placeholder="Type your message..." v-model="message_text" />
+          <input placeholder="Type your message..." v-model="message_text" required />
           <button type="submit">
             <font-awesome-icon class="primary" :icon="['far', 'paper-plane']" />
           </button>

@@ -40,8 +40,11 @@
     </b-modal>
     <b-modal id="friend-modal" ref="friend-modal" header-bg-variant="info" header-text-variant="light" centered hide-footer title="Contacts">
       <b-row v-for="(v, i) in friendList" :key="i" class="card-chat-items">
-        <b-col cols="2"><img src="../../assets/selena-gomez.jpg" alt="" style="width: 50px;border-radius: 10px"></b-col>
-        <b-col cols="8"><span>{{ v.friend_email }}</span></b-col>
+        <b-col cols="2">
+          <img :src="api_url + v.friend_img" alt="" style="width: 50px;border-radius: 10px" v-if="v.friend_img !== null">
+          <img src="../../assets/default-user.png" alt="" style="width: 50px;border-radius: 10px" v-else>
+        </b-col>
+        <b-col cols="8"><span>{{ v.friend_name }}</span></b-col>
         <b-col cols="2">
           <font-awesome-icon @click="post_room(v.friend_id)" class="primary" :icon="['far', 'paper-plane']"></font-awesome-icon>
         </b-col>
@@ -59,6 +62,7 @@ export default {
       alertMsg: '',
       isMsg: '',
       alertVariant: '',
+      api_url: process.env.VUE_APP_API_URL,
       form: {
         user_id: '',
         friend_email: ''

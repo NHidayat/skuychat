@@ -3,11 +3,8 @@
     <SidebarHeader />
     <div class="sidebar-search">
       <b-row>
-        <b-col cols="10">
+        <b-col cols="12">
           <input type="search" placeholder="Type your message...">
-        </b-col>
-        <b-col cols="2" align="right">
-          <font-awesome-icon icon="plus" class="text-link" />
         </b-col>
       </b-row>
     </div>
@@ -21,7 +18,8 @@
     <div class="card-chat-collection">
       <div class="card-chat-items" v-for="(v, i) in roomChatList" :key="i" @click="setRoom(v.room_id)">
         <div class="card-chat-image">
-          <img :src="SRC_URL + v.room_img" alt="">
+          <img :src="SRC_URL + v.room_img" alt="" v-if="v.room_img !== null">
+          <img src="../../assets/default-user.png" alt="" v-else>
         </div>
         <div class="card-chat-wrapper">
           <div class="card-chat-top">

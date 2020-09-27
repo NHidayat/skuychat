@@ -239,7 +239,7 @@ body {
 .room-chat .room-footer {
     background: #fff;
     padding: 15px;
-    position: relative;
+    position: sticky;
     bottom: 0;
     width: -webkit-fill-available;
 }
