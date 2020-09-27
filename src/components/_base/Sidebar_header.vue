@@ -21,6 +21,10 @@
             <font-awesome-icon icon="user-plus" class="list-icon" />
             <span>Invite Fiends</span>
           </b-dropdown-item>
+          <b-dropdown-item href="#" @click="logout">
+            <font-awesome-icon icon="user-plus" class="list-icon" />
+            <span>Logout</span>
+          </b-dropdown-item>
         </b-dropdown>
       </b-col>
     </b-row>
@@ -39,7 +43,7 @@
         <b-col cols="2"><img src="../../assets/selena-gomez.jpg" alt="" style="width: 50px;border-radius: 10px"></b-col>
         <b-col cols="8"><span>{{ v.friend_email }}</span></b-col>
         <b-col cols="2">
-          <font-awesome-icon class="primary" :icon="['far', 'paper-plane']"></font-awesome-icon>
+          <font-awesome-icon @click="post_room(v.friend_id)" class="primary" :icon="['far', 'paper-plane']"></font-awesome-icon>
         </b-col>
       </b-row>
     </b-modal>
@@ -69,9 +73,35 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['getFriendByUser', 'addFriend']),
+    ...mapActions(['getFriendByUser', 'addFriend', 'logout', 'postRoom', 'getRoomById']),
     get_friendList() {
       this.getFriendByUser(this.user.user_id)
+    },
+    post_room(data) {
+      const setData = {
+        sender_id: this.user.user_id,
+        getter_id: data
+      }
+      this.postRoom(setData)
+      .then(res => {
+        if (res.status == 255) {
+          const setData = {
+            user_id: this.user.user_id,
+            room_id: res.data.room_id
+          }
+          this.getRoomById(setData)
+          this.closeModal('friend-modal')
+        } else {
+          const setData = {
+            user_id: this.user.user_id,
+            room_id: res.data.result_a.room_id
+          }
+          this.getRoomById(setData)
+          this.closeModal('friend-modal')
+        }
+      }).catch(error => {
+        console.log(error)
+      })
     },
     add_friend() {
       this.isLoading = true

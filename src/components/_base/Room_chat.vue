@@ -5,42 +5,104 @@
     </div>
     <div class="room-chat" v-else>
       <div class="room-navbar">
-        <b-row>
+        <b-row class="container">
           <b-col class="room-desc">
             <div class="room-img-profile">
-              <img src="../../assets/selena-gomez.jpg" alt="">
+              <img :src="SRC_URL + roomChat.room_img" alt="">
             </div>
             <div class="room-name">
-              <span>Selena</span><br>
-              <small>Online</small>
+              <span>{{ roomChat.room_name }}</span><br>
+              <p v-if="typing">
+                <small><em>{{ typing }} is typing...</em></small>
+              </p>
+              <small v-else>Online</small>
             </div>
           </b-col>
         </b-row>
       </div>
       <div class="room-body">
-        <div class="chat-collection">
-          <div class="chat-item">
-            <div class="chat-img-profile">
-              <img src="../../assets/selena-gomez.jpg" alt="">
-            </div>
-            <div class="chat-text">
-              <span>Hi, son, how are you doing? Today, my father and I went to buy a car, bought a cool car.</span>
+        <b-container>
+          <div class="chat-collection" align="right">
+            <div class="chat-item" v-for="(v, i) in roomChat.messages" :key="i">
+              <div class="chat-img-profile">
+                <img :src="SRC_URL + v.sender_img" alt="">
+              </div>
+              <div v-if="user.user_id == v.user_id">
+                <div class="chat-text" style="background: #fff; color: #000">
+                  <span>{{ v.message_text }}</span>
+                </div>
+              </div>
+              <div v-else>
+                <div class="chat-text">
+                  <span>{{ v.message_text }}</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </b-container>
       </div>
       <div class="room-footer">
-        <b-input placeholder="Type your message..."></b-input>
+        <form @submit.prevent="onSubmit">
+          <input placeholder="Type your message..." v-model="message_text" />
+          <button type="submit">
+            <font-awesome-icon class="primary" :icon="['far', 'paper-plane']" />
+          </button>
+        </form>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
-
+import { mapGetters, mapActions } from 'vuex'
+import io from 'socket.io-client'
 export default {
+  data() {
+    return {
+      socket: io(process.env.VUE_APP_API_URL),
+      room_id: '',
+      message_text: '',
+      typing: false,
+      SRC_URL: process.env.VUE_APP_API_URL
+    }
+  },
+  watch: {
+    message_text(value) {
+      value ? this.socket.emit('typing', {
+        user_full_name: this.userData.user_full_name,
+        room: this.room
+      }) : this.socket.emit('typing', false)
+    }
+  },
+  mounted() {
+    this.socket.on('chatMessage', (data) => {
+      this.roomChat.messages.push(data)
+    })
+
+    this.socket.on('typingMessage', data => {
+      this.typing = data
+    })
+  },
   computed: {
-    ...mapGetters({ isChat: 'getIsChat' })
+    ...mapGetters({ isChat: 'getIsChat', roomChat: 'getRoomChat', user: 'user', userData: 'getUserData' })
+  },
+  methods: {
+    ...mapActions(['postMessage']),
+    onSubmit() {
+      const setData = {
+        user_id: this.user.user_id,
+        room_id: this.roomChat.room_id,
+        sender_img: this.userData.user_image,
+        message_text: this.message_text
+      }
+      console.log(setData)
+      this.postMessage(setData)
+        .then(() => {
+          this.socket.emit('roomMessage', setData)
+          this.message_text = ''
+        }).catch(error => {
+          console.log(error)
+        })
+    }
   }
 }
 

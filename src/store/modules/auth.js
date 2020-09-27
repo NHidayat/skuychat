@@ -5,6 +5,7 @@ import router from '../../router/index'
 export default {
   state: {
     user: {},
+    userData: {},
     token: localStorage.getItem('token') || null
   },
   mutations: {
@@ -12,12 +13,26 @@ export default {
       state.user = payload
       state.token = payload.token
     },
+    setUserData(state, payload) {
+      state.userData = payload
+    },
     delUser(state) {
       state.user = {}
       state.token = null
     }
   },
   actions: {
+    getUserById(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios.get(process.env.VUE_APP_API_URL + `user/${payload}`)
+          .then(response => {
+            context.commit('setUserData', response.data.data[0])
+            resolve(response.data)
+          }).catch(error => {
+            reject(error.response)
+          })
+      })
+    },
     login(context, payload) {
       return new Promise((resolve, reject) => {
         axios.post(process.env.VUE_APP_API_URL + 'user/login', payload)
@@ -93,6 +108,9 @@ export default {
     },
     user(state) {
       return state.user
+    },
+    getUserData(state) {
+      return state.userData
     }
   }
 }
