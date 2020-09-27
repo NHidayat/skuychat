@@ -7,12 +7,12 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faBars, faChevronLeft, faPlus, faSearch, faUserPlus } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faChevronLeft, faPlus, faSearch, faUserPlus, faPowerOff } from '@fortawesome/free-solid-svg-icons'
 import { faUser, faBookmark, faPaperPlane } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueConfirmDialog from 'vue-confirm-dialog'
 
-library.add(faBars, faChevronLeft, faPlus, faSearch, faUser, faBookmark, faUserPlus, faPaperPlane)
+library.add(faBars, faChevronLeft, faPlus, faSearch, faUser, faBookmark, faUserPlus, faPaperPlane, faPowerOff)
 
 Vue.use(VueConfirmDialog)
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default)

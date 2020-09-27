@@ -22,12 +22,24 @@
             <span>Invite Fiends</span>
           </b-dropdown-item>
           <b-dropdown-item href="#" @click="logout">
-            <font-awesome-icon icon="user-plus" class="list-icon" />
+            <font-awesome-icon icon="power-off" class="list-icon" />
             <span>Logout</span>
           </b-dropdown-item>
         </b-dropdown>
       </b-col>
     </b-row>
+    <div class="user-profile">
+      <div class="user-img">
+        <img :src="api_url + userData.user_image" alt="" v-if="userData.user_image !== null">
+        <img src="../../assets/default-user.png" alt="" v-else>
+      </div>
+      <div class="user-full-name">
+        <span>{{ userData.user_full_name }}</span>
+      </div>
+      <div class="user-name">
+        <span>{{ userData.user_name }}</span>
+      </div>
+    </div>
     <b-modal id="add-friend-modal" ref="add-friend-modal" header-bg-variant="info" header-text-variant="light" centered hide-footer title="Add Friend">
       <p class="my-4">Insert your friend email</p>
       <b-form inline @submit.prevent="add_friend">
@@ -73,7 +85,8 @@ export default {
   computed: {
     ...mapGetters({
       friendList: 'getFriendList',
-      user: 'user'
+      user: 'user',
+      userData: 'getUserData'
     })
   },
   methods: {

@@ -16,7 +16,6 @@ export default {
       return new Promise((resolve, reject) => {
         axios.get(process.env.VUE_APP_API_URL + `friend/${payload}`)
           .then(response => {
-            console.log(response.data.data)
             context.commit('setFriendList', response.data.data)
             resolve(response.data)
           }).catch(error => {

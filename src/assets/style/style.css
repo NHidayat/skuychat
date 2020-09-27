@@ -28,6 +28,13 @@ body {
     overflow: scroll;
     max-height: -webkit-fill-available;
     min-height: 100%;
+    z-index: 10;
+}
+
+@media (max-width: 425px) {
+    .sidebar {
+        width: 100%;
+    }
 }
 
 .sidebar-header {
@@ -35,6 +42,29 @@ body {
     font-size: 25px;
     color: #7E98DF;
     margin-bottom: 25px;
+}
+
+.sidebar .user-profile {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.sidebar .user-profile .user-img img {
+    width: 82px;
+    border-radius: 30px;
+}
+
+.sidebar .user-profile .user-full-name {
+    font-size: 22px;
+    color: #000;
+    margin-top: 10px;
+}
+
+.sidebar .user-profile .user-name {
+    color: #848484;
+    font-size: 16px;
+    font-weight: normal;
 }
 
 .sidebar-header .dropdown-menu {
