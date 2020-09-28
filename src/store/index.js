@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate'
 import Auth from './modules/auth'
 import Friend from './modules/friend'
 import Chat from './modules/chat'
+import User from './modules/user'
 
 Vue.use(Vuex)
 
@@ -11,7 +12,8 @@ export default new Vuex.Store({
   modules: {
     Auth,
     Friend,
-    Chat
+    Chat,
+    User
   },
   state: {},
   mutations: {},
