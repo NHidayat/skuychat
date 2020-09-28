@@ -33,9 +33,6 @@
               </div>
               <div class="account-item user-phone">
                 <span>{{ friendData.user_phone }}</span>
-                <div>
-                  <small class="primary">Tap to change phone number</small>
-                </div>
               </div>
               <div class="account-item user-bio">
                 <span>{{ friendData.user_bio }}</span>
@@ -53,7 +50,7 @@
                 <span>Setting</span>
               </div>
               <div class="setting-collection">
-                <div class="setting-item row">
+                <div class="setting-item row" @click="delete_friend()">
                   <b-col cols="1">
                     <b-icon icon="trash"></b-icon>
                   </b-col>
@@ -92,16 +89,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({friend_id: 'getFriendId'})
+    ...mapGetters({ friend_id: 'getFriendId', user: 'user' })
   },
   created() {
     console.log(this.friend_id)
     this.getUserById(this.friend_id)
-    .then(res => {
-      this.friendData = res.data[0]
-    }).catch(error => {
-      console.log(error)
-    })
+      .then(res => {
+        this.friendData = res.data[0]
+      }).catch(error => {
+        console.log(error)
+      })
 
     this.$getLocation().then(coordinates => {
       this.coordinate = {
@@ -113,7 +110,44 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['getUserById']),
+    ...mapActions(['getUserById', 'deleteFriend']),
+    delete_friend() {
+      const data = {
+        user_id: this.user.user_id,
+        friend_email: this.friendData.user_email
+      }
+      this.$confirm({
+        message: `Are you sure want to delete this friend?`,
+        button: {
+          no: 'Cancel',
+          yes: 'Yes'
+        },
+        callback: confirm => {
+          if (confirm) {
+            this.deleteFriend(data)
+              .then(res => {
+                this.makeToast(res.msg, 'primary')
+                setTimeout(() => {
+                  this.$router.push('/app')
+                }, 3500)
+              })
+              .catch(error => {
+                console.log(error)
+                this.makeToast(error.data.msg, 'danger')
+              })
+          }
+        }
+      })
+    },
+    makeToast(msg, variant = null, append = false) {
+      this.$bvToast.toast(`${msg}`, {
+        title: 'Hei',
+        autoHideDelay: 10000,
+        appendToast: append,
+        variant: variant,
+        solid: true
+      })
+    }
   }
 }
 
