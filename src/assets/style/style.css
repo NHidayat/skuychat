@@ -54,6 +54,7 @@ body {
 .sidebar .user-profile .user-img img {
     width: 82px;
     border-radius: 30px;
+    cursor: pointer;
 }
 
 .sidebar .user-profile .user-full-name {
@@ -226,6 +227,7 @@ body {
 .room-img-profile img {
     width: 64px;
     border-radius: 20px;
+    cursor: pointer;
 }
 
 .room-desc {
@@ -239,6 +241,22 @@ body {
 
 .chat-body {
     padding: 15px;
+}
+
+.room-body {
+    min-height: 400px;
+}
+
+@media (min-width: 1024px) {
+    .room-body {
+        min-height: 600px;
+    }
+}
+
+@media (min-width: 1140px) {
+    .room-body {
+        min-height: 1000px;
+    }
 }
 
 .room-body .chat-collection {

@@ -7,7 +7,7 @@
       <div class="room-navbar">
         <b-row class="container">
           <b-col class="room-desc">
-            <div class="room-img-profile">
+            <div class="room-img-profile" @click="setFriendProfile(roomChat.getter_id)">
               <img :src="SRC_URL + roomChat.room_img" alt="" v-if="roomChat.room_img !== null">
               <img src="../../assets/default-user.png" alt="" v-else>
             </div>
@@ -65,7 +65,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import io from 'socket.io-client'
 export default {
   data() {
@@ -99,6 +99,7 @@ export default {
   },
   methods: {
     ...mapActions(['postMessage']),
+    ...mapMutations(['setFriendProfile']),
     onSubmit() {
       const setData = {
         user_id: this.user.user_id,

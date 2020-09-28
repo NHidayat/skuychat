@@ -72,12 +72,14 @@
 .sidebar-profile .user-setting .title {
     font-size: 19px;
     font-weight: 500;
+    margin-bottom: 10px;
 }
 
 .setting-collection .setting-item {
     color: #7E98DF;
     padding: 15px 0;
-    transition: 0.5s all;
+    transition: 0.3s all;
+    cursor: pointer;
     border-radius: 10px;
 }
 

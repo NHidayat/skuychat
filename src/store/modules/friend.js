@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '../../router/index'
 
 export default {
   state: {
@@ -11,6 +12,10 @@ export default {
     },
     setFriendId(state, payload) {
       state.friendId = payload
+    },
+    setFriendProfile(state, payload) {
+      state.friendId = payload
+      router.push('/friend-profile')
     }
   },
   actions: {

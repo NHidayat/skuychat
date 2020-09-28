@@ -9,6 +9,10 @@
           <template v-slot:button-content>
             <font-awesome-icon icon="bars" class="text-link bar-icon" />
           </template>
+          <b-dropdown-item href="#" @click="profileClick">
+            <b-icon-gear class="mr-2"></b-icon-gear>
+            <span>Profile</span>
+          </b-dropdown-item>
           <b-dropdown-item href="#" @click="get_friendList" v-b-modal.friend-modal>
             <font-awesome-icon :icon="['far', 'user']" class="list-icon" />
             <span>Contacts</span>
@@ -28,10 +32,10 @@
         </b-dropdown>
       </b-col>
     </b-row>
-    <div class="user-profile" @click="profileClick">
+    <div class="user-profile">
       <div class="user-img">
-        <img :src="api_url + userData.user_image" alt="" v-if="userData.user_image !== null">
-        <img src="../../assets/default-user.png" alt="" v-else>
+        <img :src="api_url + userData.user_image" alt="" v-if="userData.user_image !== null" @click="profileClick">
+        <img src="../../assets/default-user.png" alt="" @click="profileClick" v-else>
       </div>
       <div class="user-full-name">
         <span>{{ userData.user_full_name }}</span>
@@ -52,11 +56,11 @@
     </b-modal>
     <b-modal id="friend-modal" ref="friend-modal" header-bg-variant="info" header-text-variant="light" centered hide-footer title="Contacts">
       <b-row v-for="(v, i) in friendList" :key="i" class="card-chat-items">
-        <b-col cols="2"  @click="friendProfileClick(v.friend_id)">
+        <b-col cols="2"  @click="setFriendProfile(v.friend_id)">
           <img :src="api_url + v.friend_img" alt="" style="width: 50px;border-radius: 10px" v-if="v.friend_img !== null">
           <img src="../../assets/default-user.png" alt="" style="width: 50px;border-radius: 10px" v-else>
         </b-col>
-        <b-col cols="8" @click="friendProfileClick(v.friend_id)"><span>{{ v.friend_name }}</span></b-col>
+        <b-col cols="8" @click="setFriendProfile(v.friend_id)"><span>{{ v.friend_name }}</span></b-col>
         <b-col cols="2">
           <font-awesome-icon @click="post_room(v.friend_id)" class="primary" :icon="['far', 'paper-plane']"></font-awesome-icon>
         </b-col>
@@ -92,7 +96,7 @@ export default {
   },
   methods: {
     ...mapActions(['getFriendByUser', 'addFriend', 'logout', 'postRoom', 'getRoomById']),
-    ...mapMutations(['setFriendId']),
+    ...mapMutations(['setFriendId', 'setFriendProfile']),
     get_friendList() {
       this.getFriendByUser(this.user.user_id)
     },
@@ -151,10 +155,6 @@ export default {
         variant: variant,
         solid: true
       })
-    },
-    async friendProfileClick(id) {
-      await this.setFriendId(id)
-      this.$router.push('/friend-profile')
     },
     profileClick() {
       this.$router.push({
