@@ -14,6 +14,17 @@ export default {
             reject(error)
           })
       })
+    },
+    updateLocation(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios.patch(process.env.VUE_APP_API_URL + `user/update-location/${payload.user_id}`, payload.form)
+          .then(res => {
+            resolve(res)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     }
   },
   getters: {}

@@ -21,7 +21,7 @@
           <span>{{ userData.user_full_name }}</span>
         </div>
         <div class="user-name">
-          <span>{{ userData.user_name }}</span>
+          <span>{{ userData.user_email }}</span>
         </div>
       </div>
       <div class="user-account">
@@ -131,15 +131,21 @@ export default {
         lat: coordinates.lat,
         lng: coordinates.lng,
       }
+      const setData = {
+        user_id: this.user.user_id,
+        form: this.coordinate
+      }
+      this.updateLocation(setData)
+      this.makeToast('Location updated', 'primary')
     }).catch(error => {
-      alert(error)
+      this.makeToast(error, 'danger')
     })
   },
   computed: {
     ...mapGetters({ user: 'user', userData: 'getUserData' })
   },
   methods: {
-    ...mapActions(['getUserById', 'updateUser']),
+    ...mapActions(['getUserById', 'updateUser', 'updateLocation']),
     clickMarker(position) {
       console.log(position.latLng.lat())
       console.log(position.latLng.lng())

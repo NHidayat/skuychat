@@ -24,7 +24,7 @@
                 <span>{{ friendData.user_full_name }}</span>
               </div>
               <div class="user-name">
-                <span>{{ friendData.user_name }}</span>
+                <span>{{ friendData.user_email }}</span>
               </div>
             </div>
             <div class="user-account">
@@ -40,9 +40,14 @@
               </div>
               <div class="account-item user-location">
                 <div class="title">Location</div>
-                <GmapMap :center="coordinate" :zoom="15" map-type-id="terrain" style="width: 100%; height: 300px">
+                <div v-if="friendData.lat !== null">
+                  <GmapMap :center="coordinate" :zoom="15" map-type-id="terrain" style="width: 100%; height: 300px">
                   <GmapMarker :position="coordinate" :clickable="true" :draggable="true" />
                 </GmapMap>
+                </div>
+                <div v-else>
+                  <small>{{ friendData.user_full_name }} hasn't updated the location yet</small>
+                </div>
               </div>
             </div>
             <div class="user-setting">
@@ -96,18 +101,22 @@ export default {
     this.getUserById(this.friend_id)
       .then(res => {
         this.friendData = res.data[0]
+        this.coordinate = {
+          lat: Number(this.friendData.lat),
+          lng: Number(this.friendData.lng),
+        }
       }).catch(error => {
         console.log(error)
       })
 
-    this.$getLocation().then(coordinates => {
-      this.coordinate = {
-        lat: coordinates.lat,
-        lng: coordinates.lng,
-      }
-    }).catch(error => {
-      alert(error)
-    })
+    // this.$getLocation().then(coordinates => {
+    //   this.coordinate = {
+    //     lat: coordinates.lat,
+    //     lng: coordinates.lng,
+    //   }
+    // }).catch(error => {
+    //   alert(error)
+    // })
   },
   methods: {
     ...mapActions(['getUserById', 'deleteFriend']),
