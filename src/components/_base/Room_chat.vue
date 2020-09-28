@@ -88,6 +88,9 @@ export default {
   mounted() {
     this.socket.on('chatMessage', (data) => {
       this.roomChat.messages.push(data)
+      if (data.user_id !== this.user.user_id) {
+        this.makeToast(data.sender_name, data.message_text, 'primary')
+      }
     })
 
     this.socket.on('typingMessage', data => {
@@ -103,6 +106,7 @@ export default {
     onSubmit() {
       const setData = {
         user_id: this.user.user_id,
+        sender_name: this.userData.user_full_name,
         room_id: this.roomChat.room_id,
         sender_img: this.userData.user_image,
         message_text: this.message_text
@@ -115,6 +119,15 @@ export default {
         }).catch(error => {
           console.log(error)
         })
+    },
+    makeToast(title = 'Hei', msg, variant = null, append = false) {
+      this.$bvToast.toast(`${msg}`, {
+        title: title,
+        autoHideDelay: 10000,
+        appendToast: append,
+        variant: variant,
+        solid: true
+      })
     }
   }
 }
