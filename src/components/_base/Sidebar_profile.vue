@@ -131,7 +131,6 @@ export default {
         lat: coordinates.lat,
         lng: coordinates.lng,
       }
-      console.log(this.coordinate)
     }).catch(error => {
       alert(error)
     })

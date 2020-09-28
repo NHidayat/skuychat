@@ -4,11 +4,15 @@ import axios from 'axios'
 
 export default {
   state: {
-    friendsList: []
+    friendsList: [],
+    friendId: ''
   },
   mutations: {
     setFriendList(state, payload) {
       state.friendsList = payload
+    },
+    setFriendId(state, payload) {
+      state.friendId = payload
     }
   },
   actions: {
@@ -38,6 +42,9 @@ export default {
   getters: {
     getFriendList(state) {
       return state.friendsList
+    },
+    getFriendId(state) {
+      return state.friendId
     }
   }
 }

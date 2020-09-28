@@ -52,11 +52,11 @@
     </b-modal>
     <b-modal id="friend-modal" ref="friend-modal" header-bg-variant="info" header-text-variant="light" centered hide-footer title="Contacts">
       <b-row v-for="(v, i) in friendList" :key="i" class="card-chat-items">
-        <b-col cols="2">
+        <b-col cols="2"  @click="friendProfileClick(v.friend_id)">
           <img :src="api_url + v.friend_img" alt="" style="width: 50px;border-radius: 10px" v-if="v.friend_img !== null">
           <img src="../../assets/default-user.png" alt="" style="width: 50px;border-radius: 10px" v-else>
         </b-col>
-        <b-col cols="8"><span>{{ v.friend_name }}</span></b-col>
+        <b-col cols="8" @click="friendProfileClick(v.friend_id)"><span>{{ v.friend_name }}</span></b-col>
         <b-col cols="2">
           <font-awesome-icon @click="post_room(v.friend_id)" class="primary" :icon="['far', 'paper-plane']"></font-awesome-icon>
         </b-col>
@@ -65,7 +65,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -86,11 +86,13 @@ export default {
     ...mapGetters({
       friendList: 'getFriendList',
       user: 'user',
-      userData: 'getUserData'
+      userData: 'getUserData',
+      friend_id: 'getFriendId'
     })
   },
   methods: {
     ...mapActions(['getFriendByUser', 'addFriend', 'logout', 'postRoom', 'getRoomById']),
+    ...mapMutations(['setFriendId']),
     get_friendList() {
       this.getFriendByUser(this.user.user_id)
     },
@@ -149,6 +151,10 @@ export default {
         variant: variant,
         solid: true
       })
+    },
+    async friendProfileClick(id) {
+      await this.setFriendId(id)
+      this.$router.push('/friend-profile')
     },
     profileClick() {
       this.$router.push({

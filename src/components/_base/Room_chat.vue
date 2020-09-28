@@ -81,7 +81,7 @@ export default {
     message_text(value) {
       value ? this.socket.emit('typing', {
         user_full_name: this.userData.user_full_name,
-        room: this.room
+        room_id: this.roomChat.room_id
       }) : this.socket.emit('typing', false)
     }
   },
