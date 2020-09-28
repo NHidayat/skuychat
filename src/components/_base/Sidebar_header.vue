@@ -28,7 +28,7 @@
         </b-dropdown>
       </b-col>
     </b-row>
-    <div class="user-profile">
+    <div class="user-profile" @click="profileClick">
       <div class="user-img">
         <img :src="api_url + userData.user_image" alt="" v-if="userData.user_image !== null">
         <img src="../../assets/default-user.png" alt="" v-else>
@@ -148,6 +148,15 @@ export default {
         appendToast: append,
         variant: variant,
         solid: true
+      })
+    },
+    profileClick() {
+      console.log('ok')
+      this.$router.push({
+        name: 'Profile',
+        params: {
+          user_id: this.user.user_id
+        }
       })
     },
     closeModal(modalId) {

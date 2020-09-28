@@ -5,6 +5,7 @@ import Login from '../views/auth/Login.vue'
 import Register from '../views/auth/Register.vue'
 import ForgotPassword from '../views/auth/ForgotPassword.vue'
 import App from '../views/App.vue'
+import Profile from '../views/Profile.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -37,6 +38,12 @@ const routes = [
     path: '/app',
     name: 'App',
     component: App,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
     meta: { requiresAuth: true }
   }
 ]

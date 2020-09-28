@@ -29,6 +29,7 @@ body {
     max-height: -webkit-fill-available;
     min-height: 100%;
     z-index: 10;
+    width: 34%;
 }
 
 @media (max-width: 425px) {

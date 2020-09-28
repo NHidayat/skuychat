@@ -1,0 +1,82 @@
+.sidebar-profile {
+    background: #fff;
+    padding: 30px 30px;
+    position: fixed;
+    overflow: scroll;
+    max-height: -webkit-fill-available;
+    min-height: 100%;
+    z-index: 10;
+    width: 34%;
+}
+
+@media (max-width: 425px) {
+    .sidebar-profile {
+        width: 100%;
+    }
+}
+
+.sidebar-profile .side-header {
+}
+
+.sidebar-profile .side-nav {
+    color: #7E98DF;
+    font-size: 24px;
+}
+
+.side-title {
+    text-align: center;
+}
+
+.sidebar-profile .user-profile {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.sidebar-profile .user-profile .user-img img {
+    width: 82px;
+    border-radius: 30px;
+}
+
+.sidebar-profile .user-profile .user-full-name {
+    font-size: 22px;
+    color: #000;
+    margin-top: 10px;
+}
+
+.sidebar-profile .user-profile .user-name {
+    color: #7E98DF;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.user-account .account-item {
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #F6F6F6
+}
+
+.user-account .title {
+    font-weight: 500;
+    font-size: 19px;
+}
+
+.sidebar-profile .user-setting {
+    margin-top: 25px;
+}
+
+.sidebar-profile .user-setting .title {
+    font-size: 19px;
+    font-weight: 500;
+}
+
+.setting-collection .setting-item {
+    color: #7E98DF;
+    padding: 15px 0;
+    transition: 0.5s all;
+    border-radius: 10px;
+}
+
+.setting-collection .setting-item:hover {
+    background: #efefef
+}
