@@ -61,6 +61,10 @@
     font-size: 19px;
 }
 
+.user-location .title {
+    margin-bottom: 10px;
+}
+
 .sidebar-profile .user-setting {
     margin-top: 25px;
 }

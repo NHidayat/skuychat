@@ -23,21 +23,31 @@
       </div>
       <div class="room-body">
         <b-container>
-          <div class="chat-collection" align="right">
-            <div class="chat-item" v-for="(v, i) in roomChat.messages" :key="i">
-              <div class="chat-img-profile">
-                <img :src="SRC_URL + v.sender_img" alt="" v-if="v.sender_img">
-                <img src="../../assets/default-user.png" alt="" v-else>
-              </div>
-              <div v-if="user.user_id == v.user_id">
-                <div class="chat-text" style="background: #fff; color: #000">
-                  <span>{{ v.message_text }}</span>
+          <div class="chat-collection">
+            <div v-for="(v, i) in roomChat.messages" :key="i">
+              <div v-if="v.user_id == user.user_id">
+                <div class="chat-item" style="float: right;">
+                  <div class="chat-text own">
+                    <span>{{ v.message_text }}</span>
+                  </div>
+                  <div class="chat-img-profile">
+                    <img :src="SRC_URL + v.sender_img" alt="" v-if="v.sender_img">
+                    <img src="../../assets/default-user.png" alt="" v-else>
+                  </div>
                 </div>
+                <div class="clearfix"></div>
               </div>
               <div v-else>
-                <div class="chat-text">
-                  <span>{{ v.message_text }}</span>
+                <div class="chat-item">
+                  <div class="chat-img-profile">
+                    <img :src="SRC_URL + v.sender_img" alt="" v-if="v.sender_img">
+                    <img src="../../assets/default-user.png" alt="" v-else>
+                  </div>
+                  <div class="chat-text">
+                    <span>{{ v.message_text }}</span>
+                  </div>
                 </div>
+                <div class="clearfix"></div>
               </div>
             </div>
           </div>

@@ -13,86 +13,92 @@
         <b-col cols="2"></b-col>
       </b-row>
       <div class="user-profile">
-      <div class="user-img">
-        <img :src="api_url + userData.user_image" alt="" v-if="userData.user_image !== null">
-        <img src="../../assets/default-user.png" alt="" v-else>
-      </div>
-      <div class="user-full-name">
-        <span>{{ userData.user_full_name }}</span>
-      </div>
-      <div class="user-name">
-        <span>{{ userData.user_name }}</span>
-      </div>
-    </div>
-    <div class="user-account">
-      <div class="title">
-        Account
-      </div>
-      <div class="account-item user-phone">
-        <span>{{ userData.user_phone }}</span>
-        <div>
-          <small class="primary">Tap to change phone number</small>
+        <div class="user-img">
+          <img :src="api_url + userData.user_image" alt="" v-if="userData.user_image !== null">
+          <img src="../../assets/default-user.png" alt="" v-else>
+        </div>
+        <div class="user-full-name">
+          <span>{{ userData.user_full_name }}</span>
+        </div>
+        <div class="user-name">
+          <span>{{ userData.user_name }}</span>
         </div>
       </div>
-      <div class="account-item user-bio">
-        <span>{{ userData.user_bio }}</span>
-        <div><small>Bio</small></div>
-      </div>
-    </div>
-    <div class="user-setting">
-      <div class="title">
-        <span>Setting</span>
-      </div>
-      <div class="setting-collection">
-        <div class="setting-item row" @click="setUser(userData)"  v-b-modal.edit-user>
-          <b-col cols="1">
-            <b-icon icon="pencil"></b-icon>
-          </b-col>
-          <b-col cols="8">Edit Profile</b-col>
-          <b-col cols="2" align="right">
-            <font-awesome-icon icon="chevron-right"></font-awesome-icon>
-          </b-col>
+      <div class="user-account">
+        <div class="title">
+          Account
         </div>
-      </div>
-    </div>
-     <b-modal id="edit-user" ref="edit-user" hide-footer title="Edit Profile">
-      <form @submit.prevent="patchUser">
-        <div class=" form-group row">
-          <label class="col-sm-2 col-form-label">Username</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" v-model="form.user_name" required />
+        <div class="account-item user-phone">
+          <span>{{ userData.user_phone }}</span>
+          <div>
+            <small class="primary">Tap to change phone number</small>
           </div>
         </div>
-        <div class=" form-group row">
-          <label class="col-sm-2 col-form-label">Full Name</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" v-model="form.user_full_name" required />
+        <div class="account-item user-bio">
+          <span>{{ userData.user_bio }}</span>
+          <div><small>Bio</small></div>
+        </div>
+        <div class="account-item user-location">
+          <div class="title">Location</div>
+          <GmapMap :center="coordinate" :zoom="15" map-type-id="terrain" style="width: 100%; height: 300px">
+            <GmapMarker @click="clickMarker" :position="coordinate" :clickable="true" :draggable="true" />
+          </GmapMap>
+        </div>
+      </div>
+      <div class="user-setting">
+        <div class="title">
+          <span>Setting</span>
+        </div>
+        <div class="setting-collection">
+          <div class="setting-item row" @click="setUser(userData)" v-b-modal.edit-user>
+            <b-col cols="1">
+              <b-icon icon="pencil"></b-icon>
+            </b-col>
+            <b-col cols="8">Edit Profile</b-col>
+            <b-col cols="2" align="right">
+              <font-awesome-icon icon="chevron-right"></font-awesome-icon>
+            </b-col>
           </div>
         </div>
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Image</label>
-          <div class="col-sm-10">
-            <input type="file" @change="handleFile" />
+      </div>
+      <b-modal id="edit-user" ref="edit-user" hide-footer title="Edit Profile">
+        <form @submit.prevent="patchUser">
+          <div class=" form-group row">
+            <label class="col-sm-2 col-form-label">Username</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" v-model="form.user_name" required />
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Phone</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" v-model="form.user_phone" required />
+          <div class=" form-group row">
+            <label class="col-sm-2 col-form-label">Full Name</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" v-model="form.user_full_name" required />
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label">About</label>
-          <div class="col-sm-8">
-            <textarea class="form-control" v-model="form.user_bio"></textarea>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Image</label>
+            <div class="col-sm-10">
+              <input type="file" @change="handleFile" />
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn my-danger col-md-3" @click="closeModal">Cancel</button>
-          <button type="submit" class="btn my-primary col-md-3">Update</button>
-        </div>
-      </form>
-    </b-modal>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Phone</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" v-model="form.user_phone" required />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">About</label>
+            <div class="col-sm-8">
+              <textarea class="form-control" v-model="form.user_bio"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn my-danger col-md-3" @click="closeModal">Cancel</button>
+            <button type="submit" class="btn my-primary col-md-3">Update</button>
+          </div>
+        </form>
+      </b-modal>
     </div>
   </div>
 </template>
@@ -109,18 +115,36 @@ export default {
         user_full_name: '',
         user_image: '',
         user_bio: '',
-        user_phone:''
+        user_phone: ''
+      },
+      coordinate: {
+        lat: 0,
+        lng: 0
       }
     }
   },
   created() {
     this.getUserById(this.user.user_id)
+
+    this.$getLocation().then(coordinates => {
+      this.coordinate = {
+        lat: coordinates.lat,
+        lng: coordinates.lng,
+      }
+      console.log(this.coordinate)
+    }).catch(error => {
+      alert(error)
+    })
   },
   computed: {
     ...mapGetters({ user: 'user', userData: 'getUserData' })
   },
   methods: {
     ...mapActions(['getUserById', 'updateUser']),
+    clickMarker(position) {
+      console.log(position.latLng.lat())
+      console.log(position.latLng.lng())
+    },
     handleFile(e) {
       this.form.user_image = e.target.files[0]
     },

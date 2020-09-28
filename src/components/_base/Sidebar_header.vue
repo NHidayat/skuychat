@@ -151,7 +151,6 @@ export default {
       })
     },
     profileClick() {
-      console.log('ok')
       this.$router.push({
         name: 'Profile',
         params: {

@@ -261,10 +261,17 @@ body {
     margin-left: 10px;
     position: relative;
     top: -11px;
-    color: #fff;
+    color: #000;
     max-width: 300px;
-    background: #7E98DF;
+    background: #fff;
     border-radius: 35px 35px 35px 10px;
+}
+
+.chat-text.own {
+    border-radius: 35px 35px 10px 35px;
+    margin-right: 10px;
+    color: #fff;
+    background: #7E98DF;
 }
 
 .room-chat .room-footer {
