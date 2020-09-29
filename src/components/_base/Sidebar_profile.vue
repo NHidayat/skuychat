@@ -129,7 +129,7 @@ export default {
     this.$getLocation().then(coordinates => {
       this.coordinate = {
         lat: coordinates.lat,
-        lng: coordinates.lng,
+        lng: coordinates.lng
       }
       const setData = {
         user_id: this.user.user_id,
@@ -198,7 +198,7 @@ export default {
         variant: variant,
         solid: true
       })
-    },
+    }
   }
 }
 

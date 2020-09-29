@@ -42,8 +42,8 @@
                 <div class="title">Location</div>
                 <div v-if="friendData.lat !== null">
                   <GmapMap :center="coordinate" :zoom="15" map-type-id="terrain" style="width: 100%; height: 300px">
-                  <GmapMarker :position="coordinate" :clickable="true" :draggable="true" />
-                </GmapMap>
+                    <GmapMarker :position="coordinate" :clickable="true" :draggable="true" />
+                  </GmapMap>
                 </div>
                 <div v-else>
                   <small>{{ friendData.user_full_name }} hasn't updated the location yet</small>
@@ -86,6 +86,7 @@ export default {
   data() {
     return {
       friendData: {},
+      isMsg: '',
       api_url: process.env.VUE_APP_API_URL,
       coordinate: {
         lat: 0,
@@ -103,10 +104,10 @@ export default {
         this.friendData = res.data[0]
         this.coordinate = {
           lat: Number(this.friendData.lat),
-          lng: Number(this.friendData.lng),
+          lng: Number(this.friendData.lng)
         }
       }).catch(error => {
-        console.log(error)
+        this.isMsg = error
       })
 
     // this.$getLocation().then(coordinates => {
@@ -126,7 +127,7 @@ export default {
         friend_email: this.friendData.user_email
       }
       this.$confirm({
-        message: `Are you sure want to delete this friend?`,
+        message: 'Are you sure want to delete this friend?',
         button: {
           no: 'Cancel',
           yes: 'Yes'

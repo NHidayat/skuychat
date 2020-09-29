@@ -56,7 +56,7 @@
     </b-modal>
     <b-modal id="friend-modal" ref="friend-modal" header-bg-variant="info" header-text-variant="light" centered hide-footer title="Contacts">
       <b-row v-for="(v, i) in friendList" :key="i" class="card-chat-items">
-        <b-col cols="2"  @click="setFriendProfile(v.friend_id)">
+        <b-col cols="2" @click="setFriendProfile(v.friend_id)">
           <img :src="api_url + v.friend_img" alt="" style="width: 50px;border-radius: 10px" v-if="v.friend_img !== null">
           <img src="../../assets/default-user.png" alt="" style="width: 50px;border-radius: 10px" v-else>
         </b-col>
@@ -106,25 +106,25 @@ export default {
         getter_id: data
       }
       this.postRoom(setData)
-      .then(res => {
-        if (res.status == 255) {
-          const setData = {
-            user_id: this.user.user_id,
-            room_id: res.data.room_id
+        .then(res => {
+          if (res.status === 255) {
+            const setData = {
+              user_id: this.user.user_id,
+              room_id: res.data.room_id
+            }
+            this.getRoomById(setData)
+            this.closeModal('friend-modal')
+          } else {
+            const setData = {
+              user_id: this.user.user_id,
+              room_id: res.data.result_a.room_id
+            }
+            this.getRoomById(setData)
+            this.closeModal('friend-modal')
           }
-          this.getRoomById(setData)
-          this.closeModal('friend-modal')
-        } else {
-          const setData = {
-            user_id: this.user.user_id,
-            room_id: res.data.result_a.room_id
-          }
-          this.getRoomById(setData)
-          this.closeModal('friend-modal')
-        }
-      }).catch(error => {
-        console.log(error)
-      })
+        }).catch(error => {
+          this.isMsg = error
+        })
     },
     add_friend() {
       this.isLoading = true

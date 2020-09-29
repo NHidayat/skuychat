@@ -49,7 +49,7 @@ export default {
 }
 
 .action button:hover {
-	background: #677db9;
+  background: #677db9;
 }
 
 </style>
