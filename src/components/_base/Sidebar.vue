@@ -77,7 +77,7 @@ export default {
         user_id: this.user.user_id,
         room_id: data
       }
-      // this.socket.emit('start', roomData.room_id)
+      this.socket.emit('start', roomData.room_id)
       this.getRoomById(roomData)
     },
     get_roomList() {

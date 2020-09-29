@@ -24,3 +24,4 @@ export default {
 
 </script>
 <style src="../assets/style/style.css"></style>
+<style src="../assets/style/scrollbar.css"></style>

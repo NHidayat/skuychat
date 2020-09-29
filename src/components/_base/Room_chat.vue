@@ -13,9 +13,7 @@
             </div>
             <div class="room-name">
               <span>{{ roomChat.room_name }}</span><br>
-              <p v-if="typing">
-                <small><em>{{ typing }} is typing...</em></small>
-              </p>
+              <small v-if="typing"><em>{{ typing }} is typing...</em></small>
               <small v-else>Online</small>
             </div>
           </b-col>
