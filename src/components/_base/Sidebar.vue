@@ -59,19 +59,37 @@ export default {
       isMsg: '',
       alertVariant: '',
       roomChatList: [],
-      SRC_URL: process.env.VUE_APP_API_URL
+      SRC_URL: process.env.VUE_APP_API_URL,
+      coordinate: {
+        lat: 0,
+        lng: 0
+      }
     }
   },
   created() {
     this.get_roomList()
     this.getUserById(this.user.user_id)
+    this.$getLocation().then(coordinates => {
+      this.coordinate = {
+        lat: coordinates.lat,
+        lng: coordinates.lng
+      }
+      const setData = {
+        user_id: this.user.user_id,
+        form: this.coordinate
+      }
+      this.updateLocation(setData)
+      console.log('location updated')
+    }).catch(error => {
+      this.makeToast(error, 'danger')
+    })
   },
   computed: {
     ...mapGetters({ user: 'user' })
   },
   methods: {
     ...mapMutations(['setIsChat']),
-    ...mapActions(['getRoomById', 'getUserById']),
+    ...mapActions(['getRoomById', 'getUserById', 'updateLocation']),
     setRoom(data) {
       const roomData = {
         user_id: this.user.user_id,
@@ -87,6 +105,15 @@ export default {
         }).catch(error => {
           console.log(error)
         })
+    },
+    makeToast(msg, variant = null, append = false) {
+      this.$bvToast.toast(`${msg}`, {
+        title: 'Hei',
+        autoHideDelay: 10000,
+        appendToast: append,
+        variant: variant,
+        solid: true
+      })
     }
   }
 }
