@@ -24,7 +24,7 @@
         <div class="card-chat-wrapper">
           <div class="card-chat-top">
             <span class="card-chat-time" v-if="v.latest_message.length > 0">
-              {{ v.latest_message[0].message_created_at.slice(5, 10) }}
+              <timeago :datetime="v.latest_message[0].message_created_at" :auto-update="60"></timeago>
             </span>
             <div class="card-chat-name">{{ v.room_name }}</div>
           </div>

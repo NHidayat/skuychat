@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueConfirmDialog from 'vue-confirm-dialog'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueGeolocation from 'vue-browser-geolocation'
+import VueTimeago from 'vue-timeago'
 
 library.add(faBars, faChevronLeft, faChevronRight, faPlus, faSearch, faUser, faBookmark, faUserPlus, faPaperPlane, faPowerOff)
 
@@ -30,6 +31,15 @@ Vue.use(VueGoogleMaps, {
   }
 })
 Vue.use(VueGeolocation)
+
+Vue.use(VueTimeago, {
+  name: 'Timeago',
+  locale: 'en',
+  locales: {
+    'zh-CN': require('date-fns/locale/zh_cn'),
+    ja: require('date-fns/locale/ja')
+  }
+})
 
 new Vue({
   router,
