@@ -71,7 +71,7 @@ export default {
       socket: io(process.env.VUE_APP_API_URL),
       room_id: '',
       message_text: '',
-      typing: false,
+      // typing: false,
       SRC_URL: process.env.VUE_APP_API_URL
     }
   },
@@ -84,19 +84,13 @@ export default {
     }
   },
   mounted() {
-    this.socket.on('chatMessage', (data) => {
-      this.roomChat.messages.push(data)
-      if (data.user_id !== this.user.user_id) {
-        this.makeToast(data.sender_name, data.message_text, 'primary')
-      }
-    })
-
     this.socket.on('typingMessage', data => {
-      this.typing = data
+      // this.setTyping(data)
+      console.log(data)
     })
   },
   computed: {
-    ...mapGetters({ isChat: 'getIsChat', roomChat: 'getRoomChat', user: 'user', userData: 'getUserData' })
+    ...mapGetters({ isChat: 'getIsChat', roomChat: 'getRoomChat', user: 'user', userData: 'getUserData', typing: 'getTyping' })
   },
   methods: {
     ...mapActions(['postMessage']),
@@ -109,10 +103,9 @@ export default {
         sender_img: this.userData.user_image,
         message_text: this.message_text
       }
-      console.log(setData)
+      this.socket.emit('roomMessage', setData)
       this.postMessage(setData)
         .then(() => {
-          this.socket.emit('roomMessage', setData)
           this.message_text = ''
         }).catch(error => {
           console.log(error)

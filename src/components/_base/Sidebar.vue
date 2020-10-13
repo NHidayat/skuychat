@@ -59,6 +59,7 @@ export default {
       isMsg: '',
       alertVariant: '',
       roomChatList: [],
+      oldRoom: '',
       SRC_URL: process.env.VUE_APP_API_URL,
       coordinate: {
         lat: 0,
@@ -84,18 +85,37 @@ export default {
       this.makeToast(error, 'danger')
     })
   },
+  mounted() {
+    this.socket.on('chatMessage', (data) => {
+      console.log(data)
+      this.setMessage(data)
+      if (data.user_id !== this.user.user_id) {
+        this.makeNotif(data.sender_name, data.message_text, 'primary')
+      }
+    })
+    this.socket.on('typingMessage', data => {
+      // this.setTyping(data)
+      console.log(data)
+    })
+  },
   computed: {
     ...mapGetters({ user: 'user' })
   },
   methods: {
-    ...mapMutations(['setIsChat']),
+    ...mapMutations(['setIsChat', 'setMessage', 'setTyping']),
     ...mapActions(['getRoomById', 'getUserById', 'updateLocation']),
     setRoom(data) {
       const roomData = {
         user_id: this.user.user_id,
         room_id: data
       }
-      this.socket.emit('start', roomData.room_id)
+      if (this.oldRoom) {
+        this.socket.emit('changeRoom', { oldRoom: this.oldRoom, newRoom: data })
+        this.oldRoom = data
+      } else {
+        this.socket.emit('start', { room_id: data })
+        this.oldRoom = data
+      }
       this.getRoomById(roomData)
     },
     get_roomList() {
@@ -109,6 +129,15 @@ export default {
     makeToast(msg, variant = null, append = false) {
       this.$bvToast.toast(`${msg}`, {
         title: 'Hei',
+        autoHideDelay: 10000,
+        appendToast: append,
+        variant: variant,
+        solid: true
+      })
+    },
+    makeNotif(title = 'Hei', msg, variant = null, append = false) {
+      this.$bvToast.toast(`${msg}`, {
+        title: title,
         autoHideDelay: 10000,
         appendToast: append,
         variant: variant,

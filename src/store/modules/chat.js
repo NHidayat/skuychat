@@ -3,7 +3,8 @@ import axios from 'axios'
 export default {
   state: {
     isChat: false,
-    roomChat: ''
+    roomChat: '',
+    typing: false
   },
   mutations: {
     setIsChat(state, payload) {
@@ -11,6 +12,13 @@ export default {
     },
     setRoomChat(state, payload) {
       state.roomChat = payload
+    },
+    setMessage(state, payload) {
+      state.roomChat.messages.push(payload)
+    },
+    setTyping(state, payload) {
+      // console.log(payload)
+      state.typing = payload
     }
   },
   actions: {
@@ -53,6 +61,9 @@ export default {
     },
     getRoomChat(state) {
       return state.roomChat
+    },
+    getTyping(state) {
+      return state.typing
     }
   }
 }
