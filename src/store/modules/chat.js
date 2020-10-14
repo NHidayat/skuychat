@@ -1,10 +1,10 @@
 import axios from 'axios'
-
+import io from 'socket.io-client'
 export default {
   state: {
     isChat: false,
     roomChat: '',
-    typing: false,
+    socket: io(process.env.VUE_APP_API_URL),
     listStyle: { zIndex: 0 }
   },
   mutations: {
@@ -16,9 +16,6 @@ export default {
     },
     setMessage(state, payload) {
       state.roomChat.messages.push(payload)
-    },
-    setTyping(state, payload) {
-      state.typing = payload
     },
     setListStyle(state, payload) {
       state.listStyle.zIndex = payload
@@ -70,6 +67,9 @@ export default {
     },
     getListStyle(state) {
       return state.listStyle
+    },
+    getSocket(state) {
+      return state.socket
     }
   }
 }

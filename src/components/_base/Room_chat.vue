@@ -7,7 +7,7 @@
       <div class="room-navbar">
         <b-row class="container">
           <b-col class="room-desc">
-            <div class="nav-back" @click="setListStyle(0)">
+            <div class="nav-back" @click="closeRoom">
               <font-awesome-icon icon="chevron-left" class="icon-back text-link primary" />
             </div>
             <div class="room-img-profile" @click="setFriendProfile(roomChat.getter_id)">
@@ -67,14 +67,13 @@
 </template>
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
-import io from 'socket.io-client'
 export default {
   data() {
     return {
-      socket: io(process.env.VUE_APP_API_URL),
       room_id: '',
       message_text: '',
-      SRC_URL: process.env.VUE_APP_API_URL
+      SRC_URL: process.env.VUE_APP_API_URL,
+      typing: false
     }
   },
   watch: {
@@ -86,10 +85,10 @@ export default {
     }
   },
   mounted() {
-    // this.socket.on('typingMessage', data => {
-    //   this.setTyping(data)
-    //   console.log(data)
-    // })
+    this.socket.on('typingMessage', data => {
+      console.log(data)
+      this.typing = data
+    })
   },
   computed: {
     ...mapGetters({
@@ -97,28 +96,37 @@ export default {
       roomChat: 'getRoomChat',
       user: 'user',
       userData: 'getUserData',
-      typing: 'getTyping',
-      istStyle: 'getListStyle'
+      istStyle: 'getListStyle',
+      socket: 'getSocket'
     })
   },
   methods: {
     ...mapActions(['postMessage']),
-    ...mapMutations(['setFriendProfile', 'setTyping', 'setListStyle']),
-    onSubmit() {
+    ...mapMutations(['setFriendProfile', 'setTyping', 'setListStyle', 'setRoomChat']),
+    async onSubmit() {
       const setData = {
         user_id: this.user.user_id,
         sender_name: this.userData.user_full_name,
         room_id: this.roomChat.room_id,
         sender_img: this.userData.user_image,
-        message_text: this.message_text
+        message_text: this.message_text,
+        getter_id: this.roomChat.getter_id
       }
-      this.socket.emit('roomMessage', setData)
-      // this.postMessage(setData)
-      //   .then(() => {
-      //     this.message_text = ''
-      //   }).catch(error => {
-      //     console.log(error)
-      //   })
+      await this.socket.emit('roomMessage', setData)
+      await this.socket.emit('notif', setData)
+      this.postMessage(setData)
+        .then(() => {
+          this.message_text = ''
+        }).catch(error => {
+          console.log(error)
+        })
+    },
+    closeRoom() {
+      this.setListStyle(0)
+      this.setRoomChat({
+        room_id: '',
+        messages: []
+      })
     },
     makeToast(title = 'Hei', msg, variant = null, append = false) {
       this.$bvToast.toast(`${msg}`, {

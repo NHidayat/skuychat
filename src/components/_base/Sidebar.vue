@@ -45,14 +45,12 @@
 import axios from 'axios'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import SidebarHeader from './Sidebar_header'
-import io from 'socket.io-client'
 export default {
   components: {
     SidebarHeader
   },
   data() {
     return {
-      socket: io(process.env.VUE_APP_API_URL),
       isLoading: false,
       isAlert: false,
       alertMsg: '',
@@ -70,43 +68,33 @@ export default {
   created() {
     this.get_roomList()
     this.getUserById(this.user.user_id)
-    this.$getLocation().then(coordinates => {
-      this.coordinate = {
-        lat: coordinates.lat,
-        lng: coordinates.lng
-      }
-      const setData = {
-        user_id: this.user.user_id,
-        form: this.coordinate
-      }
-      this.updateLocation(setData)
-      console.log('location updated')
-    }).catch(error => {
-      this.makeToast(error, 'danger')
-    })
+    // this.$getLocation().then(coordinates => {
+    //   this.coordinate = {
+    //     lat: coordinates.lat,
+    //     lng: coordinates.lng
+    //   }
+    //   const setData = {
+    //     user_id: this.user.user_id,
+    //     form: this.coordinate
+    //   }
+    //   this.updateLocation(setData)
+    //   console.log('location updated')
+    // }).catch(error => {
+    //   this.makeToast(error, 'danger')
+    // })
   },
-  mounted() {
-    this.socket.on('chatMessage', (data) => {
-      this.setMessage(data)
-      if (data.user_id !== this.user.user_id) {
-        this.makeNotif(data.sender_name, data.message_text, 'primary')
-      }
-    })
-    this.socket.on('typingMessage', data => {
-      this.setTyping(data)
-      console.log(data)
-    })
-  },
+  mounted() {},
   computed: {
     ...mapGetters({
       user: 'user',
       typing: 'getTyping',
       userData: 'getUserData',
-      roomChat: 'getRoomChat'
+      roomChat: 'getRoomChat',
+      socket: 'getSocket'
     })
   },
   methods: {
-    ...mapMutations(['setIsChat', 'setMessage', 'setTyping', 'setListStyle']),
+    ...mapMutations(['setIsChat', 'setTyping', 'setListStyle']),
     ...mapActions(['getRoomById', 'getUserById', 'updateLocation']),
     setRoom(data) {
       const roomData = {
@@ -134,15 +122,6 @@ export default {
     makeToast(msg, variant = null, append = false) {
       this.$bvToast.toast(`${msg}`, {
         title: 'Hei',
-        autoHideDelay: 10000,
-        appendToast: append,
-        variant: variant,
-        solid: true
-      })
-    },
-    makeNotif(title = 'Hei', msg, variant = null, append = false) {
-      this.$bvToast.toast(`${msg}`, {
-        title: title,
         autoHideDelay: 10000,
         appendToast: append,
         variant: variant,
