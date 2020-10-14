@@ -3,10 +3,13 @@
     <div class="empty-room" v-if="!isChat">
       <span>Please select a chat to start messaging</span>
     </div>
-    <div class="room-chat" v-else>
+    <div class="room-chat" :style="istStyle" v-else>
       <div class="room-navbar">
         <b-row class="container">
           <b-col class="room-desc">
+            <div class="nav-back" @click="setListStyle(0)">
+              <font-awesome-icon icon="chevron-left" class="icon-back text-link primary" />
+            </div>
             <div class="room-img-profile" @click="setFriendProfile(roomChat.getter_id)">
               <img :src="SRC_URL + roomChat.room_img" alt="" v-if="roomChat.room_img !== null">
               <img src="../../assets/default-user.png" alt="" v-else>
@@ -71,7 +74,6 @@ export default {
       socket: io(process.env.VUE_APP_API_URL),
       room_id: '',
       message_text: '',
-      // typing: false,
       SRC_URL: process.env.VUE_APP_API_URL
     }
   },
@@ -84,17 +86,24 @@ export default {
     }
   },
   mounted() {
-    this.socket.on('typingMessage', data => {
-      // this.setTyping(data)
-      console.log(data)
-    })
+    // this.socket.on('typingMessage', data => {
+    //   this.setTyping(data)
+    //   console.log(data)
+    // })
   },
   computed: {
-    ...mapGetters({ isChat: 'getIsChat', roomChat: 'getRoomChat', user: 'user', userData: 'getUserData', typing: 'getTyping' })
+    ...mapGetters({
+      isChat: 'getIsChat',
+      roomChat: 'getRoomChat',
+      user: 'user',
+      userData: 'getUserData',
+      typing: 'getTyping',
+      istStyle: 'getListStyle'
+    })
   },
   methods: {
     ...mapActions(['postMessage']),
-    ...mapMutations(['setFriendProfile']),
+    ...mapMutations(['setFriendProfile', 'setTyping', 'setListStyle']),
     onSubmit() {
       const setData = {
         user_id: this.user.user_id,
@@ -104,12 +113,12 @@ export default {
         message_text: this.message_text
       }
       this.socket.emit('roomMessage', setData)
-      this.postMessage(setData)
-        .then(() => {
-          this.message_text = ''
-        }).catch(error => {
-          console.log(error)
-        })
+      // this.postMessage(setData)
+      //   .then(() => {
+      //     this.message_text = ''
+      //   }).catch(error => {
+      //     console.log(error)
+      //   })
     },
     makeToast(title = 'Hei', msg, variant = null, append = false) {
       this.$bvToast.toast(`${msg}`, {

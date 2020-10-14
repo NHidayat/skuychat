@@ -87,22 +87,26 @@ export default {
   },
   mounted() {
     this.socket.on('chatMessage', (data) => {
-      console.log(data)
       this.setMessage(data)
       if (data.user_id !== this.user.user_id) {
         this.makeNotif(data.sender_name, data.message_text, 'primary')
       }
     })
     this.socket.on('typingMessage', data => {
-      // this.setTyping(data)
+      this.setTyping(data)
       console.log(data)
     })
   },
   computed: {
-    ...mapGetters({ user: 'user' })
+    ...mapGetters({
+      user: 'user',
+      typing: 'getTyping',
+      userData: 'getUserData',
+      roomChat: 'getRoomChat'
+    })
   },
   methods: {
-    ...mapMutations(['setIsChat', 'setMessage', 'setTyping']),
+    ...mapMutations(['setIsChat', 'setMessage', 'setTyping', 'setListStyle']),
     ...mapActions(['getRoomById', 'getUserById', 'updateLocation']),
     setRoom(data) {
       const roomData = {
@@ -113,9 +117,10 @@ export default {
         this.socket.emit('changeRoom', { oldRoom: this.oldRoom, newRoom: data })
         this.oldRoom = data
       } else {
-        this.socket.emit('start', { room_id: data })
+        this.socket.emit('selectRoom', { room_id: data })
         this.oldRoom = data
       }
+      this.setListStyle(10)
       this.getRoomById(roomData)
     },
     get_roomList() {

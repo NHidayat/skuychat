@@ -4,7 +4,8 @@ export default {
   state: {
     isChat: false,
     roomChat: '',
-    typing: false
+    typing: false,
+    listStyle: { zIndex: 0 }
   },
   mutations: {
     setIsChat(state, payload) {
@@ -17,8 +18,10 @@ export default {
       state.roomChat.messages.push(payload)
     },
     setTyping(state, payload) {
-      // console.log(payload)
       state.typing = payload
+    },
+    setListStyle(state, payload) {
+      state.listStyle.zIndex = payload
     }
   },
   actions: {
@@ -64,6 +67,9 @@ export default {
     },
     getTyping(state) {
       return state.typing
+    },
+    getListStyle(state) {
+      return state.listStyle
     }
   }
 }

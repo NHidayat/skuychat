@@ -218,6 +218,7 @@ body {
 .room-chat {
     position: relative;
     height: 100%;
+    background: #FAFAFA; 
 }
 
 .room-chat .room-navbar {
@@ -236,6 +237,29 @@ body {
 
 .room-desc {
     display: flex;
+}
+
+.room-chat .nav-back {
+    width: 36px;
+    border-right: 2px solid #FAFAFA;
+    margin-right: 10px;
+    cursor: pointer;
+    display: none; 
+}
+
+.room-chat .nav-back:hover {
+    background: #efefef;
+}
+
+.room-chat .nav-back .icon-back{
+    margin-top: 17px;
+    font-size: 23px;
+}
+
+@media (max-width: 765px) {
+    .room-chat .nav-back {
+      display: block;
+    }
 }
 
 .room-chat .room-name {
@@ -265,7 +289,7 @@ body {
 
 .room-body .chat-collection {
     margin-top: 20px;
-    padding: 15px;
+    font-size: 13px;
 }
 
 .chat-collection .chat-item {
@@ -311,6 +335,18 @@ body {
     padding: 10px;
     border-radius: 15px;
     outline: none;
+}
+
+@media (max-width: 768px) {
+    .room-footer input {
+        width: 90%
+    }
+}
+
+@media (max-width: 375px) {
+    .room-footer input {
+        width: 85%
+    }
 }
 
 .room-footer button {
