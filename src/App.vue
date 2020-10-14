@@ -29,7 +29,7 @@ export default {
     ...mapGetters({
       socket: 'getSocket',
       user: 'user',
-      roomChat: 'getRoomChat',
+      roomChat: 'getRoomChat'
     })
   },
   methods: {
