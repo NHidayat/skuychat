@@ -68,20 +68,20 @@ export default {
   created() {
     this.get_roomList()
     this.getUserById(this.user.user_id)
-    // this.$getLocation().then(coordinates => {
-    //   this.coordinate = {
-    //     lat: coordinates.lat,
-    //     lng: coordinates.lng
-    //   }
-    //   const setData = {
-    //     user_id: this.user.user_id,
-    //     form: this.coordinate
-    //   }
-    //   this.updateLocation(setData)
-    //   console.log('location updated')
-    // }).catch(error => {
-    //   this.makeToast(error, 'danger')
-    // })
+    this.$getLocation().then(coordinates => {
+      this.coordinate = {
+        lat: coordinates.lat,
+        lng: coordinates.lng
+      }
+      const setData = {
+        user_id: this.user.user_id,
+        form: this.coordinate
+      }
+      this.updateLocation(setData)
+      console.log('location updated')
+    }).catch(error => {
+      this.makeToast(error, 'danger')
+    })
   },
   mounted() {},
   computed: {
