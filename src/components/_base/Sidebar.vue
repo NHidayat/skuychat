@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     ...mapMutations(['setIsChat', 'setTyping', 'setListStyle']),
-    ...mapActions(['getRoomById', 'getUserById']),
+    ...mapActions(['getRoomById', 'getUserById', 'getFriendStatus']),
     setRoom(data) {
       const roomData = {
         user_id: this.user.user_id,
@@ -95,15 +95,15 @@ export default {
       }
       this.setListStyle(10)
       this.getRoomById(roomData)
+        .then(res => {
+          this.getFriendStatus(res.data[0].getter_id)
+        })
     },
     get_roomList() {
       this.isLoading = true
       axios.get(process.env.VUE_APP_API_URL + `chat/user/${this.user.user_id}`)
         .then(response => {
           this.roomChatList = response.data.data
-          this.isLoading = false
-        }).catch(error => {
-          console.log(error)
           this.isLoading = false
         })
     }

@@ -1,8 +1,14 @@
 import axios from 'axios'
 
 export default {
-  state: {},
-  mutations: {},
+  state: {
+    friendStatus: 0
+  },
+  mutations: {
+    setFriendStatus(state, payload) {
+      state.friendStatus = payload
+    }
+  },
   actions: {
     updateUser(context, payload) {
       return new Promise((resolve, reject) => {
@@ -36,7 +42,22 @@ export default {
             reject(error)
           })
       })
+    },
+    getFriendStatus(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios.get(process.env.VUE_APP_API_URL + `user/user-status/${payload}`)
+          .then(response => {
+            context.commit('setFriendStatus', response.data.data.user_status)
+            resolve(response.data)
+          }).catch(error => {
+            reject(error.response)
+          })
+      })
     }
   },
-  getters: {}
+  getters: {
+    getFriendStatus(state) {
+      return state.friendStatus
+    }
+  }
 }

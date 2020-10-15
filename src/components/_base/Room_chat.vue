@@ -17,7 +17,7 @@
             <div class="room-name">
               <span>{{ roomChat.room_name }}</span><br>
               <small v-if="typing"><em>{{ typing }} is typing...</em></small>
-              <small v-else>Online</small>
+              <small v-else>{{ friendStatus === "1" ? 'Online' : 'Offline' }}</small>
             </div>
           </b-col>
         </b-row>
@@ -97,12 +97,13 @@ export default {
       user: 'user',
       userData: 'getUserData',
       istStyle: 'getListStyle',
-      socket: 'getSocket'
+      socket: 'getSocket',
+      friendStatus: 'getFriendStatus'
     })
   },
   methods: {
     ...mapActions(['postMessage']),
-    ...mapMutations(['setFriendProfile', 'setTyping', 'setListStyle', 'setRoomChat']),
+    ...mapMutations(['setFriendProfile', 'setListStyle', 'setRoomChat']),
     async onSubmit() {
       const setData = {
         user_id: this.user.user_id,
