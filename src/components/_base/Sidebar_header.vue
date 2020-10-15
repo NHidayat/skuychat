@@ -47,8 +47,11 @@
     <b-modal id="add-friend-modal" ref="add-friend-modal" header-bg-variant="info" header-text-variant="light" centered hide-footer title="Add Friend">
       <p class="my-4">Insert your friend email</p>
       <b-form inline @submit.prevent="add_friend">
-        <b-input placeholder="Email" v-model="form.friend_email" required />
-        <b-button variant="info" class="ml-2" type="submit">
+        <b-input placeholder="Email" class="col-9" v-model="form.friend_email" required />
+        <b-button variant="info" class="ml-2" disabled v-if="isLoading">
+          <b-spinner type="grow" small></b-spinner>
+        </b-button>
+        <b-button variant="info" class="ml-2" type="submit" v-else>
           <font-awesome-icon icon="user-plus" class="list-icon" />
         </b-button>
       </b-form>
@@ -61,7 +64,7 @@
           <img src="../../assets/default-user.png" alt="" style="width: 50px;border-radius: 10px" v-else>
         </b-col>
         <b-col cols="8" @click="setFriendProfile(v.friend_id)"><span>{{ v.friend_name }}</span></b-col>
-        <b-col cols="2">
+        <b-col cols="2" style="font-size: 2em">
           <font-awesome-icon @click="post_room(v.friend_id)" class="primary" :icon="['far', 'paper-plane']"></font-awesome-icon>
         </b-col>
       </b-row>
@@ -129,6 +132,7 @@ export default {
     },
     add_friend() {
       this.isLoading = true
+      this.isAlert = false
       this.form.user_id = this.user.user_id
       this.addFriend(this.form)
         .then(result => {

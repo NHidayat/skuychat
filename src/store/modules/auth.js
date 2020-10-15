@@ -56,16 +56,22 @@ export default {
         callback: confirm => {
           if (confirm) {
             return new Promise((resolve, reject) => {
-              axios.patch(process.env.VUE_APP_API_URL + `user/update-status/${payload.user_id}`, payload.form)
-                .then(res => {
-                  localStorage.removeItem('token')
-                  context.commit('delUser')
-                  router.push('/login')
-                  resolve(res)
-                })
-                .catch(error => {
-                  reject(error.response.data)
-                })
+              if (payload.user_id) {
+                axios.patch(process.env.VUE_APP_API_URL + `user/update-status/${payload.user_id}`, payload.form)
+                  .then(res => {
+                    localStorage.removeItem('token')
+                    context.commit('delUser')
+                    router.push('/login')
+                    resolve(res)
+                  })
+                  .catch(error => {
+                    reject(error.response.data)
+                  })
+              } else {
+                localStorage.removeItem('token')
+                context.commit('delUser')
+                router.push('/login')
+              }
             })
           }
         }
