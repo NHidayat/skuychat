@@ -94,8 +94,11 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn my-danger col-md-3" @click="closeModal">Cancel</button>
-            <button type="submit" class="btn my-primary col-md-3">Update</button>
+            <b-button type="button" class="btn my-danger col-md-3" @click="closeModal">Cancel</b-button>
+            <b-button v-if="isLoading" class="btn primary col-md-3" disabled>
+              <b-spinner type="grow" small></b-spinner>
+            </b-button>
+            <b-button type="submit" class="btn primary col-md-3" v-else>Update</b-button>
           </div>
         </form>
       </b-modal>
@@ -117,6 +120,7 @@ export default {
         user_bio: '',
         user_phone: ''
       },
+      isLoading: false,
       coordinate: {
         lat: 0,
         lng: 0
@@ -158,6 +162,7 @@ export default {
       this.product_id = data.product_id
     },
     patchUser() {
+      this.isLoading = true
       const data = new FormData()
       data.append('user_name', this.form.user_name)
       data.append('user_full_name', this.form.user_full_name)
@@ -173,10 +178,12 @@ export default {
           this.isMsg = res.data.msg
           this.makeToast(this.isMsg, 'primary')
           this.closeModal()
+          this.isLoading = false
           this.getUserById(this.user.user_id)
         })
         .catch(error => {
           console.log(error)
+          this.isLoading = false
           this.isMsg = error.response.data.msg
           this.makeToast(this.isMsg, 'danger')
         })

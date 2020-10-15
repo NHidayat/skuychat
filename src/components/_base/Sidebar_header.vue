@@ -96,11 +96,12 @@ export default {
   },
   methods: {
     ...mapActions(['getFriendByUser', 'addFriend', 'logout', 'postRoom', 'getRoomById']),
-    ...mapMutations(['setFriendId', 'setFriendProfile']),
+    ...mapMutations(['setFriendId', 'setFriendProfile', 'setListStyle']),
     get_friendList() {
       this.getFriendByUser(this.user.user_id)
     },
     post_room(data) {
+      this.setListStyle(10)
       const setData = {
         sender_id: this.user.user_id,
         getter_id: data

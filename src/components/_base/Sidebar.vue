@@ -16,6 +16,9 @@
       </b-row>
     </div>
     <div class="card-chat-collection">
+      <div align="center" v-if="isLoading">
+        <b-spinner type="grow" variant="primary"></b-spinner>
+      </div>
       <div class="card-chat-items" v-for="(v, i) in roomChatList" :key="i" @click="setRoom(v.room_id)">
         <div class="card-chat-image">
           <img :src="SRC_URL + v.room_img" alt="" v-if="v.room_img !== null">
@@ -112,11 +115,14 @@ export default {
       this.getRoomById(roomData)
     },
     get_roomList() {
+      this.isLoading = true
       axios.get(process.env.VUE_APP_API_URL + `chat/user/${this.user.user_id}`)
         .then(response => {
           this.roomChatList = response.data.data
+          this.isLoading = false
         }).catch(error => {
           console.log(error)
+          this.isLoading = false
         })
     },
     makeToast(msg, variant = null, append = false) {

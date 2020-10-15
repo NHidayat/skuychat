@@ -39,9 +39,11 @@
             </div>
             <b-alert :variant="alertVariant" :show="isAlert">{{ alertMsg }}</b-alert>
             <div class="auth-footer">
-              <button class="primary">
-                <b-spinner small v-show="isLoading"></b-spinner>
-                <span> Register</span>
+              <button v-if="isLoading" class="primary" disabled>
+                <b-spinner type="grow" small></b-spinner>
+              </button>
+              <button type="submit" class="primary" v-else>
+                <span >Register</span>
               </button>
               <div class="text-center or">
                 <span>Register With</span>

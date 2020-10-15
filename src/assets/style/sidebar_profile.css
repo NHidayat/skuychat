@@ -1,3 +1,9 @@
+button.primary {
+    background: #7E98DF;
+    border: none;
+    outline: none;
+}
+
 .sidebar-profile {
     background: #fff;
     padding: 30px 30px;

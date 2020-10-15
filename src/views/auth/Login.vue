@@ -23,8 +23,11 @@
               <router-link class="text-link primary" to="/forgot-password">Forgot password?</router-link>
             </div>
             <div class="auth-footer">
-              <button type="submit" class="primary">
-                <b-spinner small v-show="isLoading"></b-spinner> Login
+              <button v-if="isLoading" class="primary" disabled>
+                <b-spinner type="grow" small></b-spinner>
+              </button>
+              <button type="submit" class="primary" v-else>
+                <span >Login</span>
               </button>
               <div class="text-center or">
                 <span>Login With</span>
