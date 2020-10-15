@@ -98,7 +98,9 @@
             <b-button v-if="isLoading" class="btn primary col-md-3" disabled>
               <b-spinner type="grow" small></b-spinner>
             </b-button>
-            <b-button type="submit" class="btn primary col-md-3" v-else>Update</b-button>
+            <b-button type="submit" class="btn primary col-md-3" v-else>
+              <span>Update</span>
+            </b-button>
           </div>
         </form>
       </b-modal>

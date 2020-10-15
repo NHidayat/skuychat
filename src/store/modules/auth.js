@@ -45,7 +45,7 @@ export default {
           })
       })
     },
-    logout(context) {
+    logout(context, payload) {
       Vue.$confirm({
         title: 'Are you sure?',
         message: 'Are you sure you want to logout?',
@@ -55,9 +55,18 @@ export default {
         },
         callback: confirm => {
           if (confirm) {
-            localStorage.removeItem('token')
-            context.commit('delUser')
-            router.push('/login')
+            return new Promise((resolve, reject) => {
+              axios.patch(process.env.VUE_APP_API_URL + `user/update-status/${payload.user_id}`, payload.form)
+                .then(res => {
+                  localStorage.removeItem('token')
+                  context.commit('delUser')
+                  router.push('/login')
+                  resolve(res)
+                })
+                .catch(error => {
+                  reject(error.response.data)
+                })
+            })
           }
         }
       })

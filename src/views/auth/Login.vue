@@ -11,11 +11,11 @@
             <div class="auth-form">
               <div class="input-g">
                 <label for="">Email</label>
-                <input type="email" v-model="form.user_email" required/>
+                <input type="email" v-model="form.user_email" required />
               </div>
               <div class="input-g">
                 <label for="">Password</label>
-                <input type="password" v-model="form.user_password" required/>
+                <input type="password" v-model="form.user_password" required />
               </div>
             </div>
             <b-alert variant="warning" align="center" :show="isAlert">{{ alertMsg }}</b-alert>
@@ -27,7 +27,7 @@
                 <b-spinner type="grow" small></b-spinner>
               </button>
               <button type="submit" class="primary" v-else>
-                <span >Login</span>
+                <span>Login</span>
               </button>
               <div class="text-center or">
                 <span>Login With</span>
@@ -57,18 +57,48 @@ export default {
       },
       isLoading: false,
       isAlert: false,
-      alertMsg: ''
+      alertMsg: '',
+      coordinate: {
+        lat: 0,
+        lng: 0
+      }
     }
   },
-  created() {},
+  created() {
+    this.$getLocation().then(coordinates => {
+      console.log(coordinates)
+      this.coordinate = {
+        lat: coordinates.lat,
+        lng: coordinates.lng
+      }
+    }).catch(error => {
+      this.alertMsg = error
+      this.isAlert = true
+      this.isLoading = false
+    })
+  },
   computed: {},
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(['login', 'updateLocation']),
     onSubmit() {
+      this.isAlert = false
       this.isLoading = true
       this.login(this.form)
         .then(result => {
-          this.$router.push('/app')
+          const setData = {
+            user_id: result.data.user_id,
+            form: this.coordinate
+          }
+          this.updateLocation(setData)
+            .then(updatedResult => {
+              console.log('location updated')
+              this.$router.push('/app')
+            })
+            .catch(error => {
+              this.alertMsg = error.response.data.msg
+              this.isAlert = true
+              this.isLoading = false
+            })
         }).catch(error => {
           this.alertMsg = error.data.msg
           this.isAlert = true

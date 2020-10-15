@@ -2,6 +2,7 @@ button.primary {
     background: #7E98DF;
     border: none;
     outline: none;
+    color: #fff;
 }
 
 .sidebar-profile {

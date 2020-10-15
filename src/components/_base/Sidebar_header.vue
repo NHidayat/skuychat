@@ -25,7 +25,7 @@
             <font-awesome-icon icon="user-plus" class="list-icon" />
             <span>Invite Fiends</span>
           </b-dropdown-item>
-          <b-dropdown-item href="#" @click="logout">
+          <b-dropdown-item href="#" @click="set_logout">
             <font-awesome-icon icon="power-off" class="list-icon" />
             <span>Logout</span>
           </b-dropdown-item>
@@ -164,6 +164,15 @@ export default {
           user_id: this.user.user_id
         }
       })
+    },
+    async set_logout() {
+      const setData = {
+        user_id: this.userData.user_id,
+        form: {
+          user_status: '0'
+        }
+      }
+      this.logout(setData)
     },
     closeModal(modalId) {
       this.$refs[modalId].hide()
