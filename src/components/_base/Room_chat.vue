@@ -10,7 +10,7 @@
             <div class="nav-back" @click="closeRoom">
               <font-awesome-icon icon="chevron-left" class="icon-back text-link primary" />
             </div>
-            <div class="room-img-profile" @click="setFriendProfile(roomChat.getter_id)">
+            <div class="room-img-profile" @click="set_friendProfile(roomChat.getter_id)">
               <img :src="SRC_URL + roomChat.room_img" alt="" v-if="roomChat.room_img !== null">
               <img src="../../assets/default-user.png" alt="" v-else>
             </div>
@@ -121,6 +121,10 @@ export default {
         }).catch(error => {
           console.log(error)
         })
+    },
+    set_friendProfile(data) {
+      this.setFriendProfile(data)
+      this.setListStyle(0)
     },
     closeRoom() {
       this.setListStyle(0)
