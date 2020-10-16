@@ -7,7 +7,7 @@
     <a href="https://github.com/NHidayat/skuychat/issues">Request Feature</a>
   </p>
 
-![Image Banner](https://github.com/NHidayat/skuychat/blob/master/src/assets/banner.png)
+![Image Banner](https://github.com/NHidayat/skuychat/blob/master/src/assets/banner2.png)
 
 ## About The Project
 SkuyChat is a web application to reply / send messages with your friends in realtime. SkuyChat was built using vue Js and Socket.io-client. With an attractive and responsive design, making you suitable and comfortable to use this application. Besides the chat feature, Skuychat also has other features including auto update location, manage profiles, manage users, and chat notifications.
