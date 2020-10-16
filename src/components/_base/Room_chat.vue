@@ -119,7 +119,7 @@ export default {
         .then(() => {
           this.message_text = ''
         }).catch(error => {
-          console.log(error)
+          this.makeToast('Hei', error.data.msg, 'danger')
         })
     },
     set_friendProfile(data) {
